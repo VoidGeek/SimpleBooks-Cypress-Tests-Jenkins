@@ -9,16 +9,16 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing npm dependencies...'
-                // Install project dependencies (use bat for Windows)
-                bat 'npm install'
+                // Install project dependencies (use sh for Linux)
+                sh 'npm install'
             }
         }
         
         stage('Run Cypress Tests') {
             steps {
                 echo 'Running Cypress Tests with Mochawesome Report...'
-                // Run Cypress tests with the mochawesome reporter (use bat for Windows)
-                bat 'npx cypress run --reporter mochawesome'
+                // Run Cypress tests with the mochawesome reporter (use sh for Linux)
+                sh 'npx cypress run --reporter mochawesome'
             }
         }
     }
