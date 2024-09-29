@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Cypress generated reports and screenshots
+cypress/reports/
+cypress/screenshots/
+
+# Cypress cache
+.cache/
+
+# Package lock file (optional)
+package-lock.json
+
+# Logs and temporary files
+npm-debug.log*
+.DS_Store
+.env
