@@ -25,6 +25,14 @@ pipeline {
             }
         }
         
+        stage('Install Cypress Binary') {
+            steps {
+                echo 'Installing Cypress binary...'
+                // Install Cypress binary separately to ensure it is downloaded
+                sh 'npx cypress install'
+            }
+        }
+
         stage('Run Cypress Tests') {
             steps {
                 echo 'Running Cypress Tests with Mochawesome Report...'
