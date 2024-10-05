@@ -1,11 +1,22 @@
 pipeline {
-    agent any // Use any available Jenkins agent
+    agent any
 
     environment {
-        CYPRESS_CACHE_FOLDER = "${WORKSPACE}\\.cache\\Cypress" // Cache Cypress to speed up builds
+        // Set Cypress cache folder
+        CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
+        // Fix XDG_RUNTIME_DIR for Cypress
+        XDG_RUNTIME_DIR = '/tmp'
     }
 
     stages {
+        stage('Clear Cypress Cache') {
+            steps {
+                echo 'Clearing Cypress cache...'
+                // Clear Cypress cache before installing dependencies
+                sh 'npx cypress cache clear'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 echo 'Installing npm dependencies...'
