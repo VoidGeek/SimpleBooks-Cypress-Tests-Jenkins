@@ -20,7 +20,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing npm dependencies...'
-                // Install project dependencies (use sh for Linux)
+                // Install project dependencies
                 sh 'npm install'
             }
         }
@@ -36,17 +36,23 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 echo 'Running Cypress Tests with Mochawesome Report...'
-                // Run Cypress tests with the mochawesome reporter (use sh for Linux)
+                // Run Cypress tests with the mochawesome reporter
                 sh 'npx cypress run --reporter mochawesome'
+
+                // Debug: List the contents of the reports directory
+                echo 'Listing contents of cypress/reports...'
+                sh 'ls -l cypress/reports'
+                // If assets are in a subdirectory, list that as well
+                sh 'ls -l cypress/reports/assets || echo "No assets directory"'
             }
         }
     }
 
     post {
         always {
-            // Archive the test reports as artifacts
-            archiveArtifacts artifacts: 'cypress/reports/*.html', allowEmptyArchive: true
-            // Publish report as part of the Jenkins build process
+            // Archive the test reports as artifacts, including all files
+            echo 'Archiving artifacts...'
+            archiveArtifacts artifacts: 'cypress/reports/**/*', allowEmptyArchive: true
             echo 'Pipeline completed, artifacts archived.'
         }
         success {
